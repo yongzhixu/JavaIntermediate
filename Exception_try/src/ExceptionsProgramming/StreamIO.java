@@ -40,7 +40,7 @@ public class StreamIO {
 			// TODO: handle exception
 			TextIO.put("IOException " + ioException.getMessage());
 		} finally {
-			TextIO.putln("web content copy finished!" + stringUrl);
+			TextIO.putln("web content copy finished!");
 			TextIO.putln("the file path is: " + stringUrl);
 		}
 

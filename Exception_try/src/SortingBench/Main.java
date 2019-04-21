@@ -8,8 +8,7 @@ public class Main {
 	public static void main(String [] args) {
 		sortBenchMarking(1000);
 		sortBenchMarking(10000);
-		sortBenchMarking(100000);
-		
+		sortBenchMarking(15000);
 	}
 	
 	private static void sortBenchMarking(int le) {
@@ -40,5 +39,13 @@ public class Main {
 		sort.selectionSort(num_2);
 		runTime = System.currentTimeMillis() - startTime;
 		TextIO.putln("selection sort takes "+runTime+" ms");
+		
+		
+		startTime =System.currentTimeMillis();
+		sort.quicksort(num_2,0,num_2.length-1);
+		runTime = System.currentTimeMillis() - startTime;
+		TextIO.putln("quicksort sort takes "+runTime+" ms");
+		
+		
 	}
 }
