@@ -121,7 +121,7 @@ public class JTM1 {
 					clsClassifier.trainClassifier(trainfile);
 					
 					for (String lineString : ObjectBank.getLineIterator(testfile,"utf-8")) {
-						Datum<String, String> datum= clsClassifier.makeDatumFromLine(lineString);
+						Datum<String, String> datum = clsClassifier.makeDatumFromLine(lineString);
 						System.out.println(lineString+">="+clsClassifier.classOf(datum)+"\t"+
 						clsClassifier.scoresOf(datum).getCount(clsClassifier.classOf(datum)));
 					}
