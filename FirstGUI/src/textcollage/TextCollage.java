@@ -1,6 +1,7 @@
 package textcollage;
 
 
+import java.applet.AudioClip;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
@@ -24,5 +25,9 @@ public class TextCollage {
 				(screenSize.height - frame.getHeight())/2 );
 		frame.setVisible(true);
 	}
+	
 
+	private void loadresources() {
+		TextCollage.class.getClassLoader();
+	}
 }
