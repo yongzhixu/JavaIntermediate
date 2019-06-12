@@ -10,6 +10,20 @@ import java.util.ArrayList;
  * {@link Rule}).
  */
 public class TuringMachine {
+	
+    public static boolean isSquare1(int n) {
+
+        if (n < 0) return false;
+
+        float root = 1.0f;
+
+        for (int i = 0; i < n; i++) {
+            root = 0.5f * (root + (n / root));
+        }
+
+        if (root == (int) root) return true;
+        else return false;
+    }
 
 	private ArrayList<Rule> rules = new ArrayList<Rule>(); // This machine's program.
 
