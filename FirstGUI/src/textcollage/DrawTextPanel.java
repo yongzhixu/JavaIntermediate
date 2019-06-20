@@ -334,6 +334,7 @@ public class DrawTextPanel extends JPanel {
 
 	/**
 	 * fetch background and text informations
+	 * 
 	 * @return ArrayList<String>
 	 */
 	private ArrayList<String> getContents() {
@@ -514,6 +515,7 @@ public class DrawTextPanel extends JPanel {
 
 	/**
 	 * generate random text with given length
+	 * 
 	 * @param n, the size of the string text
 	 * @return String
 	 */
