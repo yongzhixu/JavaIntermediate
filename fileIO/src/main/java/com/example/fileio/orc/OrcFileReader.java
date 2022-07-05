@@ -13,6 +13,15 @@ import java.io.IOException;
 import java.util.*;
 import java.util.function.BiFunction;
 
+// $example on:untyped_ops$
+// col("...") is preferable to df.col("...")
+import static org.apache.spark.sql.functions.col;
+
+import org.apache.spark.sql.AnalysisException;
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SparkSession;
+
 @Slf4j
 public class OrcFileReader {
     private static final int BATCH_SIZE = 12048;
@@ -124,5 +133,38 @@ public class OrcFileReader {
             throw new RuntimeException("Unsupported type " + type);
         }
         return mapper;
+    }
+
+    public void readOrcUsingSpark(String fileLocation)throws AnalysisException {
+        SparkSession spark = SparkSession
+                .builder()
+                .appName(this.getClass().getName())
+                .getOrCreate();
+        Dataset<Row> df = spark.read().orc(fileLocation);
+
+        // Displays the content of the DataFrame to stdout
+        df.show();
+        // $example on:untyped_ops$
+        // Print the schema in a tree format
+        df.printSchema();
+
+        // Select only the "name" column
+        df.select("name").show();
+
+        // Select everybody, but increment the age by 1
+        df.select(col("name"), col("age").plus(1)).show();
+        // $example on:run_sql$
+        // Register the DataFrame as a SQL temporary view
+        df.createOrReplaceTempView("people");
+
+        Dataset<Row> sqlDF = spark.sql("SELECT * FROM people");
+        sqlDF.show();
+
+        // $example on:global_temp_view$
+        // Register the DataFrame as a global temporary view
+        df.createGlobalTempView("people");
+
+        // Global temporary view is tied to a system preserved database `global_temp`
+        spark.sql("SELECT * FROM global_temp.people").show();
     }
 }
