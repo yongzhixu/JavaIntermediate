@@ -135,9 +135,10 @@ public class OrcFileReader {
         return mapper;
     }
 
-    public void readOrcUsingSpark(String fileLocation)throws AnalysisException {
+    public void readOrcUsingSpark(String fileLocation) throws AnalysisException {
         SparkSession spark = SparkSession
                 .builder()
+                .master("local[*]")
                 .appName(this.getClass().getName())
                 .getOrCreate();
         Dataset<Row> df = spark.read().orc(fileLocation);
@@ -148,23 +149,24 @@ public class OrcFileReader {
         // Print the schema in a tree format
         df.printSchema();
 
+        log.error(df.count() + "");
         // Select only the "name" column
-        df.select("name").show();
-
-        // Select everybody, but increment the age by 1
-        df.select(col("name"), col("age").plus(1)).show();
-        // $example on:run_sql$
-        // Register the DataFrame as a SQL temporary view
-        df.createOrReplaceTempView("people");
-
-        Dataset<Row> sqlDF = spark.sql("SELECT * FROM people");
-        sqlDF.show();
-
-        // $example on:global_temp_view$
-        // Register the DataFrame as a global temporary view
-        df.createGlobalTempView("people");
-
-        // Global temporary view is tied to a system preserved database `global_temp`
-        spark.sql("SELECT * FROM global_temp.people").show();
+//        df.select("name").show();
+//
+//        // Select everybody, but increment the age by 1
+//        df.select(col("name"), col("age").plus(1)).show();
+//        // $example on:run_sql$
+//        // Register the DataFrame as a SQL temporary view
+//        df.createOrReplaceTempView("people");
+//
+//        Dataset<Row> sqlDF = spark.sql("SELECT * FROM people");
+//        sqlDF.show();
+//
+//        // $example on:global_temp_view$
+//        // Register the DataFrame as a global temporary view
+//        df.createGlobalTempView("people");
+//
+//        // Global temporary view is tied to a system preserved database `global_temp`
+//        spark.sql("SELECT * FROM global_temp.people").show();
     }
 }
